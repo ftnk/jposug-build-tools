@@ -1,0 +1,213 @@
+%_pkgbuild 		pkgbuild
+%_is_pkgbuild 		1
+%_pkgbuild_version 	1.3.105
+%buildroot 		%{_tmppath}/%{name}-%{version}-build
+%_arch                  i386
+%_build_arch            i386
+%_vendor                sun
+%_os                    solaris%(uname -r | sed -e's/^5/2/')
+#%_gnu                  -gnu
+%_target_platform       %{_target_cpu}-%{_vendor}-%{_target_os}%{?_gnu}
+%_initrddir		%{_sysconfdir}/init.d
+
+#==============================================================================
+# ---- config.guess platform macros.
+#       Macro(s) similar to the tokens used by configure.
+#
+%_build                 %{_host}
+%_build_alias           %{_host_alias}
+%_build_cpu             %{_host_cpu}
+%_build_vendor          %{_host_vendor}
+%_build_os              %{_host_os}
+%_host                  %{_target_platform}
+%_host_alias            %{nil}
+%_host_cpu              i386
+%_host_vendor           %{_vendor}
+%_host_os               %{_os}
+%_target                %{_host}
+%_target_alias          %{_host_alias}
+%_target_cpu            %{_host_cpu}
+%_target_vendor         %{_host_vendor}
+%_target_os             %{_host_os}
+
+#==============================================================================
+# ---- A macro that expands to nothing.
+#
+%nil                    %{!?nil}
+
+#==============================================================================
+# ---- filesystem macros.
+#
+%_usr                   /usr
+%_usrsrc                %{_usr}/src
+%_var                   /var
+
+#==============================================================================
+# ---- Generally useful path macros.
+#
+%__awk                  gawk
+%__bzip2                /usr/bin/bzip2
+%__uncompress           /usr/bin/uncompress
+%__cat                  /bin/cat
+%__chgrp                /bin/chgrp
+%__chmod                /bin/chmod
+%__chown                /bin/chown
+%__cp                   /bin/cp
+%__cpio                 /bin/cpio
+%__file                 /usr/bin/file
+%__gpg                  /usr/bin/gpg
+%__grep                 /bin/grep
+%__gzip                 /bin/gzip
+%__id                   /usr/gnu/bin/id
+%__install              /opt/dtbld/bin/install -c
+%__ln_s                 ln -s
+%__make                 /usr/bin/make
+%__mkdir                /bin/mkdir
+%__mkdir_p              /bin/mkdir -p
+%__mv                   /bin/mv
+%__patch                /usr/bin/gpatch
+%__perl                 /usr/perl5/bin/perl
+%__pgp                  /usr/bin/pgp
+%__python               /usr/bin/python
+%__rm                   /bin/rm
+%__rsh                  /usr/bin/rsh
+%__sed                  /usr/bin/gsed
+%__ssh                  /usr/bin/ssh
+%__tar                  /bin/tar
+%__unzip                /usr/bin/unzip
+%__cmake                /usr/bin/cmake
+%cmake                  __cmake
+
+#==============================================================================
+# ---- Build system path macros.
+#
+%__ar                   /usr/ccs/bin/ar
+%__as                   /usr/ccs/bin/as
+%__cc                   /usr/sfw/bin/gcc
+%__cpp                  /usr/lib/cpp
+%__cxx                  /usr/sfw/bin/g++
+%__ld                   /usr/ccs/bin/ld
+%__nm                   /usr/ccs/bin/nm
+%__objcopy              /usr/bin/objcopy
+%__objdump              /usr/bin/objdump
+%__ranlib               ranlib
+%__remsh                %{__rsh}
+%__strip                /usr/ccs/bin/strip
+
+# XXX avoid failures if tools are not installed when rpm is built.
+%__libtoolize           libtoolize
+%__aclocal              aclocal
+%__autoheader           autoheader
+%__automake             automake
+%__autoconf             autoconf
+
+%_builddir              %{_topdir}/BUILD
+%_buildshell            /bin/bash
+%_bzip2bin              %{__bzip2}
+%_uncompressbin         %{__uncompress}
+%_defaultdocdir         %{_datadir}/doc
+%_gzipbin               %{__gzip}
+%_instchangelog         5
+%_pgpbin                %{__pgp}
+%_rpmdir                %{_topdir}/RPMS
+%_pkgdir                %{_topdir}/PKGS
+%_sourcedir             %{_topdir}/SOURCES
+%_specdir               %{_topdir}/SPECS
+%_srcrpmdir             %{_topdir}/SRPMS
+%_srcpkgdir             %{_topdir}/SPKGS
+%_pkgmapdir             %{_topdir}/PKGMAPS
+%_tmppath               %{_var}/tmp/pkgbuild-%__logname
+%_topdir                %{__homedir}/packages
+%_unzipbin              %{__unzip}
+%__check_files          /bin/true %{buildroot}
+%_unpackaged_files_terminate_build      1
+%_missing_doc_files_terminate_build     1
+%_use_internal_dependency_generator     1
+%_use_ips_autotag                       1
+%__find_provides        /bin/true
+%__find_requires        /bin/true
+
+#==============================================================================
+# ---- configure macros.
+#       Macro(s) slavishly copied from autoconf's config.status.
+#
+%_prefix                /usr
+%_exec_prefix           %{_prefix}
+%_bindir                %{_exec_prefix}/bin
+%_sbindir               %{_exec_prefix}/sbin
+%_libexecdir            %{_exec_prefix}/libexec
+%_datadir               %{_prefix}/share
+%_sysconfdir            %{_prefix}/etc
+%_sharedstatedir        %{_prefix}/com
+%_localstatedir         %{_prefix}/var
+%_lib                   lib
+%_libdir                %{_exec_prefix}/%{_lib}
+%_includedir            %{_prefix}/include
+%_oldincludedir         /usr/include
+%_infodir               %{_datadir}/info
+%_mandir                %{_datadir}/man
+%_docdir		%{_datadir}/doc
+%_pkg_docdir            %{_docdir}/%{name}
+%_javadir               %{_datadir}/java
+%_fixperms              %__chmod a+rX,u+w,g-w,o-w
+%_global_cflags		-O2 -g -pipe
+%optflags		%{_global_cflags}
+
+#==============================================================================
+# ---- specfile macros.
+#       Macro(s) here can be used reliably for reproducible builds.
+#       (Note: Above is the goal, below are the macros under development)
+#
+# The configure macro does the following:
+#       optionally change to a subdirectory (not implemented).
+#       attempt to update config.guess and config.sub.
+#       run configure with correct prefix, platform, and CFLAGS.
+#       optionally restore current directory (not implemented).
+# The configure macro should be invoked as %configure (rather than %{configure})
+# because the rest of the arguments will be expanded using %*.
+#
+#------------------------------------------------------------------------------
+# This is an improved version of %configure (from PLD team).
+%configure \
+  CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ; \
+  CXXFLAGS="${CXXFLAGS:-%cxx_optflags}" ; export CXXFLAGS ; \
+  FFLAGS="${FFLAGS:-%optflags}" ; export FFLAGS ; \
+  ./configure --host=%{_host} --build=%{_build} \\\
+        --target=%{_target_platform} \\\
+        --program-prefix=%{?_program_prefix} \\\
+        --prefix=%{_prefix} \\\
+        --exec-prefix=%{_exec_prefix} \\\
+        --bindir=%{_bindir} \\\
+        --sbindir=%{_sbindir} \\\
+        --sysconfdir=%{_sysconfdir} \\\
+        --datadir=%{_datadir} \\\
+        --includedir=%{_includedir} \\\
+        --libdir=%{_libdir} \\\
+        --libexecdir=%{_libexecdir} \\\
+        --localstatedir=%{_localstatedir} \\\
+        --sharedstatedir=%{_sharedstatedir} \\\
+        --mandir=%{_mandir} \\\
+        --infodir=%{_infodir}
+
+#------------------------------------------------------------------------------
+# The make install analogue of %configure:
+%makeinstall \
+  make \\\
+        prefix=%{?buildroot:%{buildroot}}%{_prefix} \\\
+        exec_prefix=%{?buildroot:%{buildroot}}%{_exec_prefix} \\\
+        bindir=%{?buildroot:%{buildroot}}%{_bindir} \\\
+        sbindir=%{?buildroot:%{buildroot}}%{_sbindir} \\\
+        sysconfdir=%{?buildroot:%{buildroot}}%{_sysconfdir} \\\
+        datadir=%{?buildroot:%{buildroot}}%{_datadir} \\\
+        includedir=%{?buildroot:%{buildroot}}%{_includedir} \\\
+        libdir=%{?buildroot:%{buildroot}}%{_libdir} \\\
+        libexecdir=%{?buildroot:%{buildroot}}%{_libexecdir} \\\
+        localstatedir=%{?buildroot:%{buildroot}}%{_localstatedir} \\\
+        sharedstatedir=%{?buildroot:%{buildroot}}%{_sharedstatedir} \\\
+        mandir=%{?buildroot:%{buildroot}}%{_mandir} \\\
+        infodir=%{?buildroot:%{buildroot}}%{_infodir} \\\
+  install
+
+%pkgbuild_postprocess	%__pkgbuild_libdir/pkgbuild-postprocess
+%find_lang		echo WARNING: find_lang not implemented
+%_invalid_patches_terminate_build 1
