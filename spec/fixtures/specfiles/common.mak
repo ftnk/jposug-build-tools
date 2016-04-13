@@ -11,7 +11,7 @@ CHECK_INSTALL=../bin/check_install.sh
 PKGSEND_MANIFEST=../bin/pkgsend_manifest.sh
 INSTALL_SPEC=../bin/install_spec.rb
 PUBLISH_REPOSITORY=../bin/publish_repository.sh
-CAT_PROTO=./cat_proto.rb
+CAT_PROTO=../bin/cat_proto.rb
 
 .SUFFIXES : .spec .proto
 
