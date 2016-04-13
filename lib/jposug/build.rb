@@ -158,7 +158,7 @@ module JPOSUG
         ips = ips.flatten.join(' ') if ips.is_a?(Array)
         pre = ips
       end
-      "PERINSTALL+=#{pre}"
+      "PREINSTALL+=#{pre}"
     end
   end
 end
