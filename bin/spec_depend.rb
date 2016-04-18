@@ -12,7 +12,7 @@ Ruby version of spec_depend.pl.
 
 =end
 
-require_relative '../lib/parsespec.rb'
+require_relative '../lib/jposug.rb'
 
 def usage
   puts 'usage: spec_depend2.rb build.list'
